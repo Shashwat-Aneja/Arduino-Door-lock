@@ -1,0 +1,54 @@
+====================================================================
+              ARDUINO PASSWORD DOOR LOCK (ASCII DIAGRAM v1.0)
+====================================================================
+
+                          +----------------------+
+                          |       ARDUINO        |
+                          |                      |
+                          |   D9  <-------- Row1 |
+                          |   D8  <-------- Row2 |
+                          |   D7  <-------- Row3 |
+                          |   D6  <-------- Row4 |
+                          |                      |
+                          |   D5  <-------- Col1 |
+                          |   D4  <-------- Col2 |
+                          |   D3  <-------- Col3 |
+                          |   D2  <-------- Col4 |
+                          |                      |
+                          |   D10 --------> Servo Signal
+                          |                      |
+                          |   5V  --------> +5V Rail
+                          |   GND --------> GND Rail
+                          +----------------------+
+
+
+               4×4 KEYPAD MATRIX
+               ------------------
+
+                 Col1  Col2  Col3  Col4
+                  |      |     |     |
+                --+------+------+-----+--
+    Row1    ---> |  1  |  2  |  3  |  A  |
+                --+------+------+-----+--
+    Row2    ---> |  4  |  5  |  6  |  B  |
+                --+------+------+-----+--
+    Row3    ---> |  7  |  8  |  9  |  C  |
+                --+------+------+-----+--
+    Row4    ---> |  *  |  0  |  #  |  D  |
+                ---------------------------
+
+
+               Servo Motor (SG90 / MG90S)
+               --------------------------
+
+                +5V (Red)  ---------------------> Arduino 5V
+                GND (Brown) --------------------> Arduino GND
+                Signal (Orange) -----------------> Arduino D10
+
+
+====================================================================
+Notes:
+- Keypad pin order varies by manufacturer; verify using multimeter or datasheet.
+- Do not power the servo from USB if it draws too much. Use external 5V supply if needed.
+- Ensure GND of external power and Arduino GND are connected.
+====================================================================
