@@ -9,6 +9,7 @@
 #include <Servo.h>
 #include "PasswordInput.h"
 #include "LockTiming.h"
+#include "AttemptLimiter.h"
 
 // ----- Keypad Setup -----
 const byte ROWS = 4;
@@ -34,6 +35,8 @@ const int servoPin = 10;
 PasswordInput inputPassword;
 const char correctPassword[] = "1234"; // Change before deploying the lock.
 const uint32_t UNLOCK_DURATION_MS = 3000UL;
+const uint32_t PIN_COOLDOWN_MS = 30000UL;
+AttemptLimiter pinAttempts(3, PIN_COOLDOWN_MS);
 
 bool isUnlocked = false;
 uint32_t unlockedAt = 0;
@@ -56,6 +59,12 @@ void loop() {
     return;
   }
 
+  if (pinAttempts.isLocked(static_cast<uint32_t>(millis()))) {
+    inputPassword.clear();
+    Serial.println("Too many incorrect attempts. Try again after cooldown.");
+    return;
+  }
+
   if (key == '#') {
     inputPassword.clear();
     Serial.println("Input cleared.");
@@ -68,9 +77,11 @@ void loop() {
 
 void checkPassword() {
   if (inputPassword.matches(correctPassword)) {
+    pinAttempts.reset();
     Serial.println("Password accepted.");
     unlockDoor();
   } else {
+    pinAttempts.recordFailure(static_cast<uint32_t>(millis()));
     Serial.println("Incorrect password.");
   }
 
