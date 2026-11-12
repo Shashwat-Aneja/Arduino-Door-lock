@@ -1,0 +1,20 @@
+name: Native door lock logic tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and test password and timing logic
+        run: |
+          g++ -std=c++11 -Wall -Wextra -Werror tests/door_lock_logic_test.cpp -o /tmp/door_lock_logic_test
+          /tmp/door_lock_logic_test
+      - name: Compile and test failed attempt cooldown
+        run: |
+          g++ -std=c++11 -Wall -Wextra -Werror tests/attempt_limiter_test.cpp -o /tmp/attempt_limiter_test
+          /tmp/attempt_limiter_test
