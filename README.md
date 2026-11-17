@@ -55,3 +55,6 @@ It shows:
 - Enter digits → they build up password  
 - Press `*` → submit  
 - Press `#` → clear input  
+
+
+Overlong numeric PIN attempts are invalid until cleared or submitted; a valid four-digit prefix never authenticates an overlong attempt.
