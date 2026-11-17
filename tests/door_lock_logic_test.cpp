@@ -15,6 +15,10 @@ int main() {
     assert(input.length() == 4);
     assert(input.matches("1234"));
     assert(!input.appendDigit('5'));
+    // An overlong PIN must not authenticate its silently truncated prefix.
+    assert(!input.matches("1234"));
+    assert(!input.appendDigit('6'));
+    assert(!input.matches("1234"));
     assert(!input.appendDigit('A'));
     assert(!input.appendDigit('*'));
 
@@ -23,6 +27,10 @@ int main() {
     assert(!input.matches("1234"));
     assert(input.appendDigit('1'));
     assert(!input.matches("1234"));
+    assert(input.appendDigit('2'));
+    assert(input.appendDigit('3'));
+    assert(input.appendDigit('4'));
+    assert(input.matches("1234"));
 
     assert(!lockTimeoutElapsed(109U, 100U, 10U));
     assert(lockTimeoutElapsed(110U, 100U, 10U));
@@ -31,3 +39,4 @@ int main() {
 
     return 0;
 }
+

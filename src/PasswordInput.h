@@ -8,12 +8,16 @@ class PasswordInput {
 public:
     enum { MAX_LENGTH = 4 };
 
-    PasswordInput() : length_(0) {
+    PasswordInput() : length_(0), overflowed_(false) {
         buffer_[0] = '\0';
     }
 
     bool appendDigit(char key) {
-        if (key < '0' || key > '9' || length_ >= MAX_LENGTH) {
+        if (key < '0' || key > '9') {
+            return false;
+        }
+        if (length_ >= MAX_LENGTH || overflowed_) {
+            overflowed_ = true;
             return false;
         }
         buffer_[length_++] = key;
@@ -22,13 +26,14 @@ public:
     }
 
     bool matches(const char* expected) const {
-        return expected != NULL
+        return !overflowed_ && expected != NULL
             && length_ == strlen(expected)
             && strcmp(buffer_, expected) == 0;
     }
 
     void clear() {
         length_ = 0;
+        overflowed_ = false;
         buffer_[0] = '\0';
     }
 
@@ -39,6 +44,8 @@ public:
 private:
     char buffer_[MAX_LENGTH + 1];
     size_t length_;
+    bool overflowed_;
 };
 
 #endif
+
