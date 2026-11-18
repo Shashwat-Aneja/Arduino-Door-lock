@@ -6,6 +6,7 @@
 int main() {
     PasswordInput input;
     assert(input.length() == 0);
+    assert(!input.matches(""));
     assert(!input.matches("1234"));
 
     assert(input.appendDigit('1'));
@@ -24,8 +25,10 @@ int main() {
 
     input.clear();
     assert(input.length() == 0);
+    assert(!input.matches(""));
     assert(!input.matches("1234"));
     assert(input.appendDigit('1'));
+    assert(!input.matches("1"));
     assert(!input.matches("1234"));
     assert(input.appendDigit('2'));
     assert(input.appendDigit('3'));
