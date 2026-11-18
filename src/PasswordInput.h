@@ -27,7 +27,8 @@ public:
 
     bool matches(const char* expected) const {
         return !overflowed_ && expected != NULL
-            && length_ == strlen(expected)
+            && length_ == MAX_LENGTH
+            && strlen(expected) == MAX_LENGTH
             && strcmp(buffer_, expected) == 0;
     }
 

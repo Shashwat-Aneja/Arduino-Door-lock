@@ -58,3 +58,5 @@ It shows:
 
 
 Overlong numeric PIN attempts are invalid until cleared or submitted; a valid four-digit prefix never authenticates an overlong attempt.
+
+Authentication requires exactly four entered digits and a configured four-digit PIN. An empty or accidentally shortened configured PIN fails closed instead of authenticating an empty or shortened attempt.
